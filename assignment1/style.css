@@ -52,7 +52,7 @@ section {
   background: #eaf8bf;
   padding: 25px;
   max-width: 700px;
-  margin-bottom: 25px;
+  margin: 0 auto 25px;
   border-radius: 12px;
   transition: transform 0.2s ease, background 0.2s ease;
 }
