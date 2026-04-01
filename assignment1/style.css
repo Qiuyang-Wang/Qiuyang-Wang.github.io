@@ -1,4 +1,5 @@
 body {
+  /* I use a simple font stack here to keep the text easy to read. The assignment focuses on written reflection, so readability is more important than decorative typography. I choose a bright blue background because it loosely reflects the visual tone of the Endless Summer website, which feels open, light, and atmospheric. The soft green text colour creates contrast without being too harsh. I also increase the line height slightly so longer paragraphs feel more comfortable to read on screen. */
   font-family: "Helvetica Neue", Arial, sans-serif;
   background: #70d7ff;
   color: #eaf8bf;
@@ -7,6 +8,7 @@ body {
 
 /* Layout */
 main {
+  /* I limit the width of the main content to around 900px and center it. This makes the page feel more like an article rather than a full-width layout. It also helps guide the reader’s attention and prevents the text from becoming too wide, which would make it harder to read. The vertical margin adds breathing space so the content doesn't feel crowded. */
   max-width: 900px;
   margin: 80px auto;
   padding: 0 20px;
@@ -14,10 +16,12 @@ main {
 
 /* Header */
 header {
+  /* I separate the header from the main content using margin. This creates a clear starting point for the page and makes the structure easier to understand at a glance. */
   margin-bottom: 60px;
 }
 
 h1 {
+  /* The title is centered and larger than other text to create a clear visual hierarchy. I use a medium weight so it stands out but still feels clean and not too heavy. */
   font-size: 40px;
   font-weight: 600;
   margin-bottom: 10px;
@@ -25,21 +29,25 @@ h1 {
 }
 
 header p {
+  /* The paragraph under the title works as supporting information. I keep it smaller and aligned to the center so it visually connects to the heading without drawing too much attention. */
   color: #eaf8bf;
   font-size: 14px;
   text-align: center;
 }
 
 a {
+  /* I keep links in a standard blue tone so they are easy to recognise. This follows common web conventions and helps usability. */
   color: #0077cc;
 }
 
 a:hover {
+  /* I only add a simple underline on hover. This creates a clear interaction cue without introducing complex effects that might distract from the content. */
   text-decoration: underline;
 }
 
 /* Section Card Style */
 section {
+  /* Each section is designed as a card to separate the answers to the thirteen questions. The light background contrasts with the page background and helps organise the content into readable blocks. The rounded corners soften the layout visually. */
   background: #eaf8bf;
   padding: 25px;
   margin-bottom: 25px;
@@ -48,18 +56,21 @@ section {
 }
 
 section:hover {
+  /* I add a small hover effect to make the page feel slightly interactive. The movement is minimal because the focus should remain on reading rather than interaction. */
   transform: translateY(-4px);
   background: #daf391;
 }
 
 /* Typography */
 h2 {
+  /* The question headings are styled to stand out from the paragraph text. I use a darker blue to maintain contrast and guide the reader through each section. */
   font-size: 18px;
   margin-bottom: 10px;
   color: #0031a7;
 }
 
 p {
+  /* The paragraph text is kept at a moderate size for readability. I use a darker tone than the background to ensure clear contrast and reduce visual strain during longer reading. */
   font-size: 15px;
   color: #002966;
 }
