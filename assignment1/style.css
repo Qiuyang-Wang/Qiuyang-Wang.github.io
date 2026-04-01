@@ -32,6 +32,8 @@ h1 {
 header p {
   /* The paragraph under the title works as supporting information. I keep it smaller and aligned to the center so it visually connects to the heading without drawing too much attention. */
   color: #eaf8bf;
+  max-width: 600px;
+  margin: 5px auto;
   font-size: 14px;
   text-align: center;
 }
