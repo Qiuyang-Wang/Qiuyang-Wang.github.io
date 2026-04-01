@@ -18,6 +18,7 @@ main {
 header {
   /* I separate the header from the main content using margin. This creates a clear starting point for the page and makes the structure easier to understand at a glance. */
   margin-bottom: 60px;
+  text-align: center;
 }
 
 h1 {
@@ -50,6 +51,7 @@ section {
   /* Each section is designed as a card to separate the answers to the thirteen questions. The light background contrasts with the page background and helps organise the content into readable blocks. The rounded corners soften the layout visually. */
   background: #eaf8bf;
   padding: 25px;
+  max-width: 700px;
   margin-bottom: 25px;
   border-radius: 12px;
   transition: transform 0.2s ease, background 0.2s ease;
@@ -72,5 +74,7 @@ h2 {
 p {
   /* The paragraph text is kept at a moderate size for readability. I use a darker tone than the background to ensure clear contrast and reduce visual strain during longer reading. */
   font-size: 15px;
+  width: 100%;
   color: #002966;
+  text-align: justify;
 }
