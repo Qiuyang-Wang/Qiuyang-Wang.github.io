@@ -1,7 +1,7 @@
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
-  background: #111;
-  color: #eee;
+  background: #70d7ff;
+  color: #eaf8bf;
   line-height: 1.6;
 }
 
@@ -25,13 +25,22 @@ h1 {
 }
 
 header p {
-  color: #aaa;
+  color: #eaf8bf;
   font-size: 14px;
+  text-align: center;
+}
+
+a {
+  color: #0077cc;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 /* Section Card Style */
 section {
-  background: #1a1a1a;
+  background: #eaf8bf;
   padding: 25px;
   margin-bottom: 25px;
   border-radius: 12px;
@@ -40,25 +49,17 @@ section {
 
 section:hover {
   transform: translateY(-4px);
-  background: #222;
+  background: #daf391;
 }
 
 /* Typography */
 h2 {
   font-size: 18px;
   margin-bottom: 10px;
-  color: #fff;
+  color: #0031a7;
 }
 
 p {
   font-size: 15px;
-  color: #ccc;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  font-size: 13px;
-  color: #777;
-  margin-top: 50px;
+  color: #002966;
 }
