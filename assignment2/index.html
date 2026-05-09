@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DJ MIX — PLAYER</title>
+    <!-- Orbitron: a geometric typeface designed for display purposes, perfect for DJ/electronic aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     The title uses "DJ MIX" to immediately communicate the context.
+     The neon glow effect on the title is achieved with CSS text-shadow,
+     which reinforces the nightclub / DJ booth atmosphere.
+============================================================ -->
+<header>
+    <div class="header-inner">
+        <span class="header-tag">LIVE SET</span>
+        <h1>DJ MIX<span class="neon-dot">.</span></h1>
+        <span class="header-tag">2024</span>
+    </div>
+</header>
+
+<!-- Navigation Section -->
+<nav>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Videos</a></li>
+        <li><a href="#">Music</a></li>
+        <li><a href="#">Playlists</a></li>
+    </ul>
+</nav>
+
+<!-- Main Content Section -->
+<main class="container">
+
+    <!-- ============================================================
+         MEDIA PLAYER SECTION
+         The overall .media-player wrapper uses a dark card style with
+         a subtle border glow to make it feel like DJ equipment.
+    ============================================================ -->
+    <div class="media-player">
+
+        <!-- Video element — native controls are hidden; we use custom controls below -->
+        <div class="video-wrapper">
+            <video id="custom-video-player">
+                <source
+                        src="https://thelongesthumstore.sgp1.cdn.digitaloceanspaces.com/IM-2250/miac.mp4"
+                        type="video/mp4"
+                />
+            </video>
+        </div>
+
+        <!-- ============================================================
+             WAVEFORM VISUALISER (Extra Feature)
+             This is the custom interactive feature added for the DJ context.
+             Each .bar is a CSS-animated column that bounces independently
+             using a randomised animation-duration and animation-delay.
+             JavaScript pauses all animations when the video is paused,
+             and restarts them on play — giving the user clear visual
+             feedback about playback state without any audio analysis library.
+             This technique uses only CSS @keyframes + JS classList toggling,
+             which are methods covered in earlier class experiments but
+             combined here in a new context not demonstrated in class.
+        ============================================================ -->
+        <div class="visualiser" id="visualiser">
+            <!-- 28 bars are generated here. The varying heights and
+                 animation speeds create an organic, non-repetitive feel -->
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <!-- ============================================================
+             CUSTOM CONTROLS
+             Controls are laid out in two rows:
+             Row 1: play/pause, time display, volume, mute, fullscreen
+             Row 2: progress bar (clickable)
+             This layout mirrors real DJ software UI patterns.
+        ============================================================ -->
+        <div class="custom-controls">
+
+            <!-- Row 1: buttons and time -->
+            <div class="controls-row">
+
+                <!-- Play/Pause: toggles between play and pause icon -->
+                <button id="play-pause-btn" onclick="togglePlayPause()" aria-label="Play or Pause">
+                    <img
+                            id="play-pause-img"
+                            src="https://img.icons8.com/ios-glyphs/30/play--v1.png"
+                            alt="Play Button"
+                            width="24"
+                            height="24"
+                    />
+                </button>
+
+                <!-- Time display: shows currentTime / duration -->
+                <span class="time-display" id="time-display">0:00 / 0:00</span>
+
+                <!-- Volume slider: range input controls video.volume (0 to 1) -->
+                <div class="volume-group">
+                    <label for="volume-slider" class="volume-label">VOL</label>
+                    <input
+                            type="range"
+                            id="volume-slider"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value="1"
+                            oninput="setVolume(this.value)"
+                            aria-label="Volume"
+                    />
+                </div>
+
+                <!-- Mute toggle button -->
+                <button id="mute-btn" onclick="toggleMute()" aria-label="Mute or Unmute">
+                    <img
+                            id="mute-img"
+                            src="https://img.icons8.com/ios-glyphs/30/speaker--v1.png"
+                            alt="Mute"
+                            width="24"
+                            height="24"
+                    />
+                </button>
+
+                <!-- Fullscreen button -->
+                <button id="fullscreen-btn" onclick="toggleFullscreen()" aria-label="Fullscreen">
+                    <img
+                            src="https://img.icons8.com/ios-glyphs/30/full-screen--v1.png"
+                            alt="Fullscreen"
+                            width="24"
+                            height="24"
+                    />
+                </button>
+
+            </div>
+
+            <!-- Row 2: progress bar — clicking jumps to that position in the video -->
+            <div class="progress-bar" id="progress-bar" onclick="seekVideo(event)" aria-label="Video progress">
+                <span id="progress-bar-fill"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+         TRACKLIST SECTION
+         Replacing the generic "Additional Content" with a DJ-appropriate
+         tracklist. This gives the page real context and content hierarchy.
+         Each track shows an index number, title, and timestamp.
+    ============================================================ -->
+    <section class="tracklist">
+        <h2>TRACKLIST</h2>
+        <ul>
+            <li>
+                <span class="track-num">01</span>
+                <span class="track-title">Intro — Drop Zone</span>
+                <span class="track-time">0:00</span>
+            </li>
+            <li>
+                <span class="track-num">02</span>
+                <span class="track-title">Night Circuit</span>
+                <span class="track-time">1:24</span>
+            </li>
+            <li>
+                <span class="track-num">03</span>
+                <span class="track-title">Pulse Grid</span>
+                <span class="track-time">2:58</span>
+            </li>
+            <li>
+                <span class="track-num">04</span>
+                <span class="track-title">Frequency Shift</span>
+                <span class="track-time">4:10</span>
+            </li>
+            <li>
+                <span class="track-num">05</span>
+                <span class="track-title">Outro — Signal Fade</span>
+                <span class="track-time">5:33</span>
+            </li>
+        </ul>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 DJ MIX Player. All rights reserved.</p>
+    <div class="footer-credits">
+        <a href="https://icons8.com/icon/59862/play">Play</a> icon by <a href="https://icons8.com">Icons8</a> &nbsp;|&nbsp;
+        <a href="https://icons8.com/icon/61012/pause">Pause</a> icon by <a href="https://icons8.com">Icons8</a> &nbsp;|&nbsp;
+        <a href="https://icons8.com/icon/speaker">Speaker</a> icon by <a href="https://icons8.com">Icons8</a> &nbsp;|&nbsp;
+        <a href="https://icons8.com/icon/full-screen">Fullscreen</a> icon by <a href="https://icons8.com">Icons8</a>
+    </div>
+</footer>
+
+</body>
+</html>

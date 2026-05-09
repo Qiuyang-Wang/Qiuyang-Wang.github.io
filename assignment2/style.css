@@ -1,0 +1,443 @@
+/* ============================================================
+   DJ MIX PLAYER — style.css
+
+   Design rationale:
+   The DJ/electronic music context called for a dark, high-contrast
+   visual language. Real DJ software (Serato, Traktor, Rekordbox) all
+   use dark interfaces with bright accent colours — this reduces eye
+   strain in dark venues and makes the glowing elements stand out.
+
+   The neon cyan (#00f0ff) accent colour was chosen because it reads
+   as "electronic" and "digital" without feeling generic. It is used
+   sparingly as a highlight so it retains maximum visual impact.
+
+   CSS custom properties (variables) are used throughout so the entire
+   colour scheme can be adjusted from one place — good practice for
+   theming and accessibility.
+============================================================ */
+
+/* ---- CSS Variables ---- */
+:root {
+    --bg-deep:        #080810;
+    --bg-card:        #111120;
+    --bg-card-border: #2a2a45;
+    --neon:           #00f0ff;
+    --neon-dim:       rgba(0, 240, 255, 0.18);
+    --neon-glow:      0 0 8px #00f0ff, 0 0 24px rgba(0,240,255,0.4);
+    --text-primary:   #e8e8f0;
+    --text-muted:     #666688;
+    --btn-bg:         #1c1c32;
+    --btn-hover:      #2a2a48;
+    --bar-color:      #00f0ff;
+    --progress-bg:    #1e1e36;
+    --progress-fill:  #00f0ff;
+}
+
+/* ---- Base ---- */
+body {
+    font-family: 'Share Tech Mono', monospace;
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    /* Subtle grid texture to evoke a circuit board feel */
+    background-image:
+            linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* ---- Header ---- */
+header {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--bg-card-border);
+    padding: 18px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: var(--text-primary);
+    letter-spacing: 0.12em;
+    /* Neon glow on the title reinforces the DJ aesthetic */
+    text-shadow: var(--neon-glow);
+}
+
+.neon-dot {
+    color: var(--neon);
+}
+
+.header-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+    border: 1px solid var(--neon);
+    padding: 3px 8px;
+    opacity: 0.7;
+}
+
+/* ---- Navigation ---- */
+nav {
+    margin: 20px 0;
+    text-align: center;
+    width: 100%;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+nav ul li a:hover {
+    color: var(--neon);
+    border-color: var(--neon);
+}
+
+/* ---- Main container ---- */
+.container {
+    max-width: 900px;
+    width: 100%;
+    padding: 10px 16px 40px;
+}
+
+/* ---- Media Player Card ---- */
+.media-player {
+    width: 100%;
+    background-color: var(--bg-card);
+    border: 1px solid var(--bg-card-border);
+    border-radius: 4px;
+    padding: 16px;
+    /* Soft outer glow on the player card */
+    box-shadow: 0 0 40px rgba(0,240,255,0.06), 0 4px 24px rgba(0,0,0,0.6);
+    margin-bottom: 32px;
+}
+
+/* Video fills the player card width */
+.video-wrapper {
+    width: 100%;
+    background: #000;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.video-wrapper video {
+    width: 100%;
+    display: block;
+}
+
+/* ============================================================
+   WAVEFORM VISUALISER — Extra Feature
+
+   Why this feature:
+   A frequency visualiser is the most iconic visual element in DJ
+   software and music production tools. It gives the user immediate
+   visual feedback about whether the audio is playing, which is
+   especially important because the video may not always fill the
+   screen with obvious motion.
+
+   How it works:
+   Each .bar has a random animation-duration and animation-delay
+   set by JavaScript on page load. This randomisation means the bars
+   never all peak or dip at the same time, creating the organic look
+   of a real audio spectrum. When the video is paused, JavaScript
+   adds the class "paused" to #visualiser, which sets all bar heights
+   to a flat minimal state via CSS.
+
+   This combines: CSS @keyframes, CSS custom properties,
+   JavaScript DOM manipulation, and JavaScript event listeners —
+   all techniques from class experiments, but used together in a
+   novel context.
+============================================================ */
+.visualiser {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    height: 60px;
+    margin: 14px 0 10px;
+    padding: 0 4px;
+}
+
+.bar {
+    flex: 1;
+    max-width: 14px;
+    background: var(--bar-color);
+    border-radius: 2px 2px 0 0;
+    animation: bounce 0.6s ease-in-out infinite alternate;
+    /* box-shadow creates the neon glow effect on each bar */
+    box-shadow: 0 0 6px var(--neon), 0 0 12px rgba(0,240,255,0.3);
+    min-height: 4px;
+}
+
+/* Paused state: bars drop to minimal height and animation stops */
+.visualiser.paused .bar {
+    animation: none;
+    height: 4px !important;
+    opacity: 0.3;
+    transition: height 0.4s ease, opacity 0.4s ease;
+}
+
+@keyframes bounce {
+    0%   { height: 8px; }
+    100% { height: var(--bar-max, 48px); }
+}
+
+/* ---- Custom Controls ---- */
+.custom-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+/* Row 1: all the buttons and time display sit in a flex row */
+.controls-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Shared button style */
+.custom-controls button {
+    background-color: var(--btn-bg);
+    border: 1px solid var(--bg-card-border);
+    padding: 8px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    transition: background-color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+}
+
+.custom-controls button:hover {
+    background-color: var(--btn-hover);
+    border-color: var(--neon);
+}
+
+/* Invert icon images so they show white on dark backgrounds */
+.custom-controls button img {
+    filter: invert(1);
+}
+
+/* Time display — monospace font keeps the numbers from jumping around */
+.time-display {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--neon);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Volume group: label + range slider side by side */
+.volume-group {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex: 1;
+    min-width: 100px;
+    max-width: 180px;
+}
+
+.volume-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    flex-shrink: 0;
+}
+
+/* Volume slider — custom styled to match the neon theme */
+#volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--progress-bg);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--neon);
+    box-shadow: var(--neon-glow);
+    cursor: pointer;
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--neon);
+    border: none;
+    cursor: pointer;
+}
+
+/* ---- Progress Bar ---- */
+/* The progress bar sits on its own row below the buttons.
+   Clicking anywhere on it calls seekVideo() in script.js,
+   which calculates the click position as a fraction of the bar width
+   and sets video.currentTime accordingly. */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--progress-bg);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-bar:hover {
+    height: 12px;
+    transition: height 0.15s ease;
+}
+
+#progress-bar-fill {
+    display: block;
+    height: 100%;
+    background-color: var(--progress-fill);
+    width: 0;
+    box-shadow: var(--neon-glow);
+    transition: width 0.25s linear;
+}
+
+/* ---- Tracklist Section ---- */
+.tracklist {
+    background-color: var(--bg-card);
+    border: 1px solid var(--bg-card-border);
+    border-radius: 4px;
+    padding: 20px 24px;
+}
+
+.tracklist h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    color: var(--neon);
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--bg-card-border);
+    padding-bottom: 10px;
+}
+
+.tracklist ul {
+    list-style: none;
+}
+
+.tracklist li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--bg-card-border);
+    font-size: 0.85rem;
+    transition: color 0.15s;
+}
+
+.tracklist li:last-child {
+    border-bottom: none;
+}
+
+.tracklist li:hover {
+    color: var(--neon);
+    cursor: default;
+}
+
+.track-num {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    width: 24px;
+    flex-shrink: 0;
+}
+
+.track-title {
+    flex: 1;
+    letter-spacing: 0.05em;
+}
+
+.track-time {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    flex-shrink: 0;
+}
+
+/* ---- Footer ---- */
+footer {
+    background-color: var(--bg-card);
+    border-top: 1px solid var(--bg-card-border);
+    color: var(--text-muted);
+    text-align: center;
+    padding: 16px;
+    width: 100%;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    margin-top: auto;
+}
+
+footer a {
+    color: var(--neon);
+    text-decoration: none;
+    opacity: 0.7;
+}
+
+footer a:hover {
+    opacity: 1;
+}
+
+.footer-credits {
+    margin-top: 6px;
+}
+
+/* ---- Responsive ---- */
+/* On narrow screens, the controls row wraps and the volume slider
+   stretches to fill the available space */
+@media (max-width: 520px) {
+    .controls-row {
+        flex-wrap: wrap;
+    }
+
+    .volume-group {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .header-tag {
+        display: none;
+    }
+}
