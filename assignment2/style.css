@@ -1,98 +1,97 @@
 /* ============================================================
-   DJ MIX PLAYER — style.css
+   FOCUS & FLOW — style.css
 
-   Design rationale:
-   The DJ/electronic music context called for a dark, high-contrast
-   visual language. Real DJ software (Serato, Traktor, Rekordbox) all
-   use dark interfaces with bright accent colours — this reduces eye
-   strain in dark venues and makes the glowing elements stand out.
+   Colour palette rationale:
+   The five specified colours split naturally into two roles.
+   The blues (#00017c, #0038a7, #0074d6) form a deep-to-medium
+   blue range that reads as calm, academic, and trustworthy —
+   appropriate for a study tool. The ambers (#ffb400, #ffda00)
+   are warm accent colours used sparingly for interactive elements
+   and the Nixie timer glow. Warm amber on cool blue is a classic
+   high-legibility combination and avoids the "tech startup" look
+   of cyan-on-dark that is overused in media players.
 
-   The neon cyan (#00f0ff) accent colour was chosen because it reads
-   as "electronic" and "digital" without feeling generic. It is used
-   sparingly as a highlight so it retains maximum visual impact.
-
-   CSS custom properties (variables) are used throughout so the entire
-   colour scheme can be adjusted from one place — good practice for
-   theming and accessibility.
+   Text is kept in near-white (#f0f4ff) for body copy and pure
+   white for headings to ensure WCAG AA contrast against the
+   dark blue backgrounds.
 ============================================================ */
 
-/* ---- CSS Variables ---- */
 :root {
-    --bg-deep:        #080810;
-    --bg-card:        #111120;
-    --bg-card-border: #2a2a45;
-    --neon:           #00f0ff;
-    --neon-dim:       rgba(0, 240, 255, 0.18);
-    --neon-glow:      0 0 8px #00f0ff, 0 0 24px rgba(0,240,255,0.4);
-    --text-primary:   #e8e8f0;
-    --text-muted:     #666688;
-    --btn-bg:         #1c1c32;
-    --btn-hover:      #2a2a48;
-    --bar-color:      #00f0ff;
-    --progress-bg:    #1e1e36;
-    --progress-fill:  #00f0ff;
+    /* Blues — background and structural colours */
+    --off-white:    #faf2e0;
+    --blue-mid:     #0038a7;
+    --blue-light:   #0074d6;
+
+    /* Ambers — accent and interactive colours */
+    --amber:        #ffb400;
+    --amber-bright: #ffda00;
+
+    /* Text */
+    --text-primary: #f0f4ff;
+    --text-muted:   #bbdfff;
+
+    /* Surface */
+    --surface:      #0038a7;   /* slightly lighter than deep blue for cards */
+    --surface-border: rgba(0, 116, 214, 0.35);
+
+    /* Nixie glow layers — warm amber corona mimicking real Nixie tubes */
+    --nixie-glow:
+            0 0 6px #ffda00,
+            0 0 16px #ffb400,
+            0 0 32px rgba(255, 180, 0, 0.5),
+            0 0 60px rgba(255, 180, 0, 0.2);
+
+    /* Button */
+    --btn-bg:       rgba(0, 56, 167, 0.6);
+    --btn-hover:    rgba(0, 116, 214, 0.5);
 }
 
 /* ---- Base ---- */
 body {
-    font-family: 'Share Tech Mono', monospace;
-    background-color: var(--bg-deep);
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--off-white);
     color: var(--text-primary);
     line-height: 1.6;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    /* Subtle grid texture to evoke a circuit board feel */
-    background-image:
-            linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
+    /*
+        Subtle radial gradient from mid-blue at the top centre creates
+        a soft spotlight effect that draws the eye to the header and
+        player without being distracting during a long study session.
+    */
+    background-image: radial-gradient(ellipse 80% 40% at 50% 0%, var(--blue-mid) 0%, var(--off-white) 70%);
 }
 
 /* ---- Header ---- */
 header {
-    background-color: var(--bg-card);
-    border-bottom: 1px solid var(--bg-card-border);
-    padding: 18px 0;
+    background-color: transparent;
+    padding: 28px 0 18px;
     text-align: center;
     width: 100%;
-}
-
-.header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
+    border-bottom: 1px solid var(--surface-border);
 }
 
 header h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 900;
-    font-size: clamp(1.8rem, 5vw, 3rem);
-    color: var(--text-primary);
-    letter-spacing: 0.12em;
-    /* Neon glow on the title reinforces the DJ aesthetic */
-    text-shadow: var(--neon-glow);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    color: #ffffff;
+    letter-spacing: 0.04em;
 }
 
-.neon-dot {
-    color: var(--neon);
-}
-
-.header-tag {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--neon);
-    letter-spacing: 0.2em;
-    border: 1px solid var(--neon);
-    padding: 3px 8px;
-    opacity: 0.7;
+.header-sub {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 4px;
 }
 
 /* ---- Navigation ---- */
 nav {
-    margin: 20px 0;
+    margin: 18px 0;
     text-align: center;
     width: 100%;
 }
@@ -101,112 +100,54 @@ nav ul {
     list-style: none;
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 nav ul li a {
     text-decoration: none;
     color: var(--text-muted);
     font-size: 0.8rem;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 6px 14px;
+    padding: 5px 14px;
+    border-radius: 2px;
     border: 1px solid transparent;
     transition: color 0.2s, border-color 0.2s;
 }
 
 nav ul li a:hover {
-    color: var(--neon);
-    border-color: var(--neon);
+    color: var(--amber-bright);
+    border-color: var(--amber);
 }
 
-/* ---- Main container ---- */
+/* ---- Container ---- */
 .container {
-    max-width: 900px;
+    max-width: 1000px;
     width: 100%;
-    padding: 10px 16px 40px;
+    padding: 10px 16px 48px;
 }
 
 /* ---- Media Player Card ---- */
 .media-player {
     width: 100%;
-    background-color: var(--bg-card);
-    border: 1px solid var(--bg-card-border);
-    border-radius: 4px;
-    padding: 16px;
-    /* Soft outer glow on the player card */
-    box-shadow: 0 0 40px rgba(0,240,255,0.06), 0 4px 24px rgba(0,0,0,0.6);
-    margin-bottom: 32px;
+    background-color: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 6px;
+    padding: 14px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 40px rgba(0, 1, 124, 0.6);
 }
 
-/* Video fills the player card width */
 .video-wrapper {
     width: 100%;
     background: #000;
-    border-radius: 2px;
+    border-radius: 3px;
     overflow: hidden;
 }
 
 .video-wrapper video {
     width: 100%;
     display: block;
-}
-
-/* ============================================================
-   WAVEFORM VISUALISER — Extra Feature
-
-   Why this feature:
-   A frequency visualiser is the most iconic visual element in DJ
-   software and music production tools. It gives the user immediate
-   visual feedback about whether the audio is playing, which is
-   especially important because the video may not always fill the
-   screen with obvious motion.
-
-   How it works:
-   Each .bar has a random animation-duration and animation-delay
-   set by JavaScript on page load. This randomisation means the bars
-   never all peak or dip at the same time, creating the organic look
-   of a real audio spectrum. When the video is paused, JavaScript
-   adds the class "paused" to #visualiser, which sets all bar heights
-   to a flat minimal state via CSS.
-
-   This combines: CSS @keyframes, CSS custom properties,
-   JavaScript DOM manipulation, and JavaScript event listeners —
-   all techniques from class experiments, but used together in a
-   novel context.
-============================================================ */
-.visualiser {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 3px;
-    height: 60px;
-    margin: 14px 0 10px;
-    padding: 0 4px;
-}
-
-.bar {
-    flex: 1;
-    max-width: 14px;
-    background: var(--bar-color);
-    border-radius: 2px 2px 0 0;
-    animation: bounce 0.6s ease-in-out infinite alternate;
-    /* box-shadow creates the neon glow effect on each bar */
-    box-shadow: 0 0 6px var(--neon), 0 0 12px rgba(0,240,255,0.3);
-    min-height: 4px;
-}
-
-/* Paused state: bars drop to minimal height and animation stops */
-.visualiser.paused .bar {
-    animation: none;
-    height: 4px !important;
-    opacity: 0.3;
-    transition: height 0.4s ease, opacity 0.4s ease;
-}
-
-@keyframes bounce {
-    0%   { height: 8px; }
-    100% { height: var(--bar-max, 48px); }
 }
 
 /* ---- Custom Controls ---- */
@@ -217,7 +158,6 @@ nav ul li a:hover {
     margin-top: 12px;
 }
 
-/* Row 1: all the buttons and time display sit in a flex row */
 .controls-row {
     display: flex;
     align-items: center;
@@ -228,7 +168,7 @@ nav ul li a:hover {
 /* Shared button style */
 .custom-controls button {
     background-color: var(--btn-bg);
-    border: 1px solid var(--bg-card-border);
+    border: 1px solid var(--surface-border);
     padding: 8px 10px;
     cursor: pointer;
     display: flex;
@@ -241,32 +181,32 @@ nav ul li a:hover {
 
 .custom-controls button:hover {
     background-color: var(--btn-hover);
-    border-color: var(--neon);
+    border-color: var(--amber);
 }
 
-/* Invert icon images so they show white on dark backgrounds */
+/* Icons are dark by default from Icons8; invert makes them white */
 .custom-controls button img {
     filter: invert(1);
 }
 
-/* Time display — monospace font keeps the numbers from jumping around */
+/* Time readout */
 .time-display {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'DM Sans', sans-serif;
     font-size: 0.82rem;
-    color: var(--neon);
-    letter-spacing: 0.08em;
+    color: var(--amber-bright);
+    letter-spacing: 0.06em;
     white-space: nowrap;
     flex-shrink: 0;
 }
 
-/* Volume group: label + range slider side by side */
+/* Volume group */
 .volume-group {
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     flex: 1;
     min-width: 100px;
-    max-width: 180px;
+    max-width: 200px;
 }
 
 .volume-label {
@@ -276,13 +216,13 @@ nav ul li a:hover {
     flex-shrink: 0;
 }
 
-/* Volume slider — custom styled to match the neon theme */
+/* Volume slider — amber thumb on blue track */
 #volume-slider {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
     height: 4px;
-    background: var(--progress-bg);
+    background: var(--blue-light);
     border-radius: 2px;
     outline: none;
     cursor: pointer;
@@ -290,134 +230,288 @@ nav ul li a:hover {
 
 #volume-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    appearance: none;
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: var(--neon);
-    box-shadow: var(--neon-glow);
+    background: var(--amber);
     cursor: pointer;
+    box-shadow: 0 0 6px rgba(255,180,0,0.6);
 }
 
 #volume-slider::-moz-range-thumb {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: var(--neon);
+    background: var(--amber);
     border: none;
     cursor: pointer;
 }
 
 /* ---- Progress Bar ---- */
-/* The progress bar sits on its own row below the buttons.
-   Clicking anywhere on it calls seekVideo() in script.js,
-   which calculates the click position as a fraction of the bar width
-   and sets video.currentTime accordingly. */
+/*
+    The progress bar sits on its own row so it spans the full
+    control width. onclick calls seekVideo(event) in script.js,
+    which reads event.offsetX / bar.offsetWidth to get a 0–1
+    fraction, then sets video.currentTime = fraction * duration.
+*/
 .progress-bar {
     width: 100%;
-    height: 8px;
-    background-color: var(--progress-bg);
-    border-radius: 4px;
+    height: 6px;
+    background-color: var(--blue-light);
+    border-radius: 3px;
     overflow: hidden;
     cursor: pointer;
-    position: relative;
+    transition: height 0.15s;
 }
 
 .progress-bar:hover {
-    height: 12px;
-    transition: height 0.15s ease;
+    height: 10px;
 }
 
 #progress-bar-fill {
     display: block;
     height: 100%;
-    background-color: var(--progress-fill);
+    background-color: var(--amber);
     width: 0;
-    box-shadow: var(--neon-glow);
+    box-shadow: 0 0 8px rgba(255,180,0,0.5);
     transition: width 0.25s linear;
 }
 
-/* ---- Tracklist Section ---- */
-.tracklist {
-    background-color: var(--bg-card);
-    border: 1px solid var(--bg-card-border);
-    border-radius: 4px;
-    padding: 20px 24px;
+/* ============================================================
+   INFO GRID — two-column card layout below the player
+============================================================ */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-.tracklist h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.25em;
-    color: var(--neon);
-    margin-bottom: 16px;
-    border-bottom: 1px solid var(--bg-card-border);
-    padding-bottom: 10px;
+/* Shared card style */
+.card {
+    background-color: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 6px;
+    padding: 24px;
+    box-shadow: 0 4px 24px rgba(0,1,124,0.4);
 }
 
-.tracklist ul {
-    list-style: none;
+.card-label {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 10px;
 }
 
-.tracklist li {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--bg-card-border);
-    font-size: 0.85rem;
-    transition: color 0.15s;
+/* ---- Now Playing card ---- */
+.now-playing h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: #ffffff;
+    margin-bottom: 10px;
 }
 
-.tracklist li:last-child {
-    border-bottom: none;
-}
-
-.tracklist li:hover {
-    color: var(--neon);
-    cursor: default;
-}
-
-.track-num {
+.description {
+    font-size: 0.88rem;
     color: var(--text-muted);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    width: 24px;
-    flex-shrink: 0;
+    line-height: 1.7;
+    margin-bottom: 16px;
 }
 
-.track-title {
-    flex: 1;
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    font-size: 0.75rem;
+    color: var(--amber-bright);
+    background-color: rgba(255, 180, 0, 0.1);
+    border: 1px solid rgba(255, 180, 0, 0.3);
+    border-radius: 20px;
+    padding: 3px 10px;
     letter-spacing: 0.05em;
 }
 
-.track-time {
-    color: var(--text-muted);
+/* ============================================================
+   POMODORO TIMER CARD
+============================================================ */
+.timer-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Study goal input */
+.goal-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.goal-label {
     font-size: 0.78rem;
-    flex-shrink: 0;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+}
+
+.goal-input {
+    background-color: rgba(0, 56, 167, 0.4);
+    border: 1px solid var(--surface-border);
+    border-radius: 3px;
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.goal-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.goal-input:focus {
+    border-color: var(--amber);
+}
+
+/* ============================================================
+   NIXIE TUBE DISPLAY
+
+   The Nixie tube effect is built from three layers:
+   1. "Nixie One" font — tubular strokes mimic the glass tubes
+   2. amber/yellow text colour (#ffda00) — warm cathode glow
+   3. Stacked text-shadow values — inner bright core fading to
+      a soft amber corona, matching real Nixie tube photographs
+
+   The .nixie-display container adds a dark rounded box that acts
+   as the glass envelope of the tube, with a faint amber border.
+============================================================ */
+.nixie-display {
+    background-color: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 180, 0, 0.25);
+    border-radius: 6px;
+    padding: 12px 10px;
+    text-align: center;
+}
+
+.nixie-digit {
+    font-family: 'Nixie One', monospace;
+    font-size: clamp(2.6rem, 8vw, 3.8rem);
+    color: var(--amber-bright);
+    letter-spacing: 0.1em;
+    text-shadow: var(--nixie-glow);
+    /* A subtle flicker animation reinforces the analogue tube feel */
+    animation: flicker 6s infinite;
+}
+
+/* Very subtle brightness flicker — barely perceptible, just enough
+   to feel organic rather than purely digital */
+@keyframes flicker {
+    0%, 95%, 100% { opacity: 1; }
+    96%            { opacity: 0.92; }
+    97%            { opacity: 1; }
+    98%            { opacity: 0.88; }
+}
+
+/* Preset duration buttons */
+.preset-row {
+    display: flex;
+    gap: 8px;
+}
+
+.preset-btn {
+    flex: 1;
+    background-color: var(--btn-bg);
+    border: 1px solid var(--surface-border);
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    padding: 6px 0;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+}
+
+.preset-btn:hover,
+.preset-btn.active {
+    color: var(--amber-bright);
+    border-color: var(--amber);
+    background-color: rgba(255, 180, 0, 0.08);
+}
+
+/* Timer Start / Reset buttons */
+.timer-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.timer-btn {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 10px 0;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    transition: opacity 0.15s, background-color 0.15s;
+}
+
+.start-btn {
+    background-color: var(--amber);
+    color: var(--off-white);
+    border-color: var(--amber);
+}
+
+.start-btn:hover {
+    background-color: var(--amber-bright);
+}
+
+.reset-btn {
+    background-color: transparent;
+    color: var(--text-muted);
+    border-color: var(--surface-border);
+}
+
+.reset-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+}
+
+/* Goal confirmation message */
+.goal-confirm {
+    font-size: 0.78rem;
+    color: var(--amber);
+    letter-spacing: 0.04em;
+    min-height: 1.2em;
+    font-style: italic;
 }
 
 /* ---- Footer ---- */
 footer {
-    background-color: var(--bg-card);
-    border-top: 1px solid var(--bg-card-border);
+    background-color: var(--off-white);
+    border-top: 1px solid var(--surface-border);
     color: var(--text-muted);
     text-align: center;
     padding: 16px;
     width: 100%;
     font-size: 0.75rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     margin-top: auto;
 }
 
 footer a {
-    color: var(--neon);
+    color: var(--amber);
     text-decoration: none;
-    opacity: 0.7;
 }
 
 footer a:hover {
-    opacity: 1;
+    color: var(--amber-bright);
 }
 
 .footer-credits {
@@ -425,19 +519,17 @@ footer a:hover {
 }
 
 /* ---- Responsive ---- */
-/* On narrow screens, the controls row wraps and the volume slider
-   stretches to fill the available space */
-@media (max-width: 520px) {
+@media (max-width: 640px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
     .controls-row {
         flex-wrap: wrap;
     }
 
     .volume-group {
-        max-width: 100%;
         flex: 1 1 100%;
-    }
-
-    .header-tag {
-        display: none;
+        max-width: 100%;
     }
 }

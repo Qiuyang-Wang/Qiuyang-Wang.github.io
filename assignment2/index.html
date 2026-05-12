@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DJ MIX — PLAYER</title>
-    <!-- Orbitron: a geometric typeface designed for display purposes, perfect for DJ/electronic aesthetic -->
+    <title>Focus & Flow — Study Music Player</title>
+    <!--
+        Font choice rationale:
+        "Playfair Display" is a high-contrast serif used for headings — it
+        carries a calm, bookish authority that matches the study/relaxation
+        context. "DM Sans" is the body font; its wide apertures make it
+        comfortable to read at small sizes without fatigue, which matters
+        for a page a student may have open for hours.
+        "Nixie One" is used exclusively for the Pomodoro timer digits because
+        its hollow, tubular letterforms closely resemble the glow of a Nixie
+        tube clock — reinforcing the focused, retro-analogue mood.
+    -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&family=Nixie+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
@@ -15,19 +25,15 @@
 
 <!-- ============================================================
      HEADER
-     The title uses "DJ MIX" to immediately communicate the context.
-     The neon glow effect on the title is achieved with CSS text-shadow,
-     which reinforces the nightclub / DJ booth atmosphere.
+     Kept minimal — a study tool should not compete for attention.
+     The subtitle sets the mood immediately for a new visitor.
 ============================================================ -->
 <header>
-    <div class="header-inner">
-        <span class="header-tag">LIVE SET</span>
-        <h1>DJ MIX<span class="neon-dot">.</span></h1>
-        <span class="header-tag">2024</span>
-    </div>
+    <h1>Focus &amp; Flow</h1>
+    <p class="header-sub">Music for relaxation &amp; deep study</p>
 </header>
 
-<!-- Navigation Section -->
+<!-- Navigation — unchanged from original structure -->
 <nav>
     <ul>
         <li><a href="#">Home</a></li>
@@ -37,17 +43,17 @@
     </ul>
 </nav>
 
-<!-- Main Content Section -->
+<!-- Main Content -->
 <main class="container">
 
     <!-- ============================================================
-         MEDIA PLAYER SECTION
-         The overall .media-player wrapper uses a dark card style with
-         a subtle border glow to make it feel like DJ equipment.
+         MEDIA PLAYER
+         The video's native controls are removed so the custom control
+         bar below is the only interface. This gives full visual control
+         over the look and feel, and avoids duplicated UI.
     ============================================================ -->
     <div class="media-player">
 
-        <!-- Video element — native controls are hidden; we use custom controls below -->
         <div class="video-wrapper">
             <video id="custom-video-player">
                 <source
@@ -58,168 +64,180 @@
         </div>
 
         <!-- ============================================================
-             WAVEFORM VISUALISER (Extra Feature)
-             This is the custom interactive feature added for the DJ context.
-             Each .bar is a CSS-animated column that bounces independently
-             using a randomised animation-duration and animation-delay.
-             JavaScript pauses all animations when the video is paused,
-             and restarts them on play — giving the user clear visual
-             feedback about playback state without any audio analysis library.
-             This technique uses only CSS @keyframes + JS classList toggling,
-             which are methods covered in earlier class experiments but
-             combined here in a new context not demonstrated in class.
-        ============================================================ -->
-        <div class="visualiser" id="visualiser">
-            <!-- 28 bars are generated here. The varying heights and
-                 animation speeds create an organic, non-repetitive feel -->
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-
-        <!-- ============================================================
              CUSTOM CONTROLS
-             Controls are laid out in two rows:
-             Row 1: play/pause, time display, volume, mute, fullscreen
-             Row 2: progress bar (clickable)
-             This layout mirrors real DJ software UI patterns.
+             Layout: two rows.
+             Row 1 — play/pause · time display · volume · mute · fullscreen
+             Row 2 — clickable progress bar
+             The two-row layout keeps each row uncluttered, reducing
+             cognitive load for a user who just wants to press play and study.
         ============================================================ -->
         <div class="custom-controls">
 
-            <!-- Row 1: buttons and time -->
             <div class="controls-row">
 
-                <!-- Play/Pause: toggles between play and pause icon -->
-                <button id="play-pause-btn" onclick="togglePlayPause()" aria-label="Play or Pause">
+                <!-- Play / Pause: icon swaps between play and pause on click -->
+                <button id="play-pause-btn" onclick="togglePlayPause()" aria-label="Play or pause">
                     <img
                             id="play-pause-img"
                             src="https://img.icons8.com/ios-glyphs/30/play--v1.png"
-                            alt="Play Button"
-                            width="24"
-                            height="24"
+                            alt="Play"
+                            width="22" height="22"
                     />
                 </button>
 
-                <!-- Time display: shows currentTime / duration -->
+                <!-- Time display: currentTime / duration, updated by JS -->
                 <span class="time-display" id="time-display">0:00 / 0:00</span>
 
-                <!-- Volume slider: range input controls video.volume (0 to 1) -->
+                <!-- Volume: range slider maps 0–1 directly onto video.volume -->
                 <div class="volume-group">
                     <label for="volume-slider" class="volume-label">VOL</label>
                     <input
                             type="range"
                             id="volume-slider"
-                            min="0"
-                            max="1"
-                            step="0.01"
-                            value="1"
+                            min="0" max="1" step="0.01" value="1"
                             oninput="setVolume(this.value)"
                             aria-label="Volume"
                     />
                 </div>
 
-                <!-- Mute toggle button -->
-                <button id="mute-btn" onclick="toggleMute()" aria-label="Mute or Unmute">
+                <!-- Mute toggle: swaps icon between speaker and muted speaker -->
+                <button id="mute-btn" onclick="toggleMute()" aria-label="Mute or unmute">
                     <img
                             id="mute-img"
                             src="https://img.icons8.com/ios-glyphs/30/speaker--v1.png"
-                            alt="Mute"
-                            width="24"
-                            height="24"
+                            alt="Speaker"
+                            width="22" height="22"
                     />
                 </button>
 
-                <!-- Fullscreen button -->
+                <!-- Fullscreen: uses Fullscreen API with webkit fallback -->
                 <button id="fullscreen-btn" onclick="toggleFullscreen()" aria-label="Fullscreen">
                     <img
                             src="https://img.icons8.com/ios-glyphs/30/full-screen--v1.png"
                             alt="Fullscreen"
-                            width="24"
-                            height="24"
+                            width="22" height="22"
                     />
                 </button>
 
             </div>
 
-            <!-- Row 2: progress bar — clicking jumps to that position in the video -->
-            <div class="progress-bar" id="progress-bar" onclick="seekVideo(event)" aria-label="Video progress">
+            <!-- Progress bar: clicking calls seekVideo(event) in script.js -->
+            <div class="progress-bar" id="progress-bar" onclick="seekVideo(event)" role="progressbar" aria-label="Video progress">
                 <span id="progress-bar-fill"></span>
             </div>
 
         </div>
     </div>
 
+
     <!-- ============================================================
-         TRACKLIST SECTION
-         Replacing the generic "Additional Content" with a DJ-appropriate
-         tracklist. This gives the page real context and content hierarchy.
-         Each track shows an index number, title, and timestamp.
+         ADDITIONAL CONTENT
+         Two cards side by side on wide screens, stacked on mobile.
+         Left  — Now Playing info (replaces generic placeholder text)
+         Right — Pomodoro focus timer with study goal input (extra feature)
     ============================================================ -->
-    <section class="tracklist">
-        <h2>TRACKLIST</h2>
-        <ul>
-            <li>
-                <span class="track-num">01</span>
-                <span class="track-title">Intro — Drop Zone</span>
-                <span class="track-time">0:00</span>
-            </li>
-            <li>
-                <span class="track-num">02</span>
-                <span class="track-title">Night Circuit</span>
-                <span class="track-time">1:24</span>
-            </li>
-            <li>
-                <span class="track-num">03</span>
-                <span class="track-title">Pulse Grid</span>
-                <span class="track-time">2:58</span>
-            </li>
-            <li>
-                <span class="track-num">04</span>
-                <span class="track-title">Frequency Shift</span>
-                <span class="track-time">4:10</span>
-            </li>
-            <li>
-                <span class="track-num">05</span>
-                <span class="track-title">Outro — Signal Fade</span>
-                <span class="track-time">5:33</span>
-            </li>
-        </ul>
+    <section class="info-grid">
+
+        <!-- Now Playing info card -->
+        <div class="card now-playing">
+            <span class="card-label">NOW PLAYING</span>
+            <h2>Quite Study Session</h2>
+            <p class="description">
+                Carefully selected ambient music and soothing soundscapes designed to help you achieve a state of calm and focus. We recommend listening with headphones.
+            </p>
+            <div class="tags">
+                <span class="tag">#lofi</span>
+                <span class="tag">#study</span>
+                <span class="tag">#chill</span>
+                <span class="tag">#focus</span>
+                <span class="tag">#ambient</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             POMODORO FOCUS TIMER — Extra Feature
+
+             Why this feature:
+             The Pomodoro Technique is one of the most widely used study
+             methods (Cirillo, 2006). A built-in timer means the student
+             never has to leave the page to check the time, which reduces
+             distraction and directly serves the relaxation/study context.
+
+             The study goal input ("Today I want to focus on…") gives the
+             user a moment of intentional reflection before starting. When
+             Start is pressed, the goal text is echoed back as a confirmation
+             message — a simple form of user feedback that makes the
+             interaction feel purposeful rather than mechanical.
+
+             The Nixie tube aesthetic:
+             The timer digits use the "Nixie One" font, whose hollow tubular
+             strokes mimic the warm glow of a vintage Nixie tube clock.
+             CSS text-shadow layers in amber (#ffb400) and yellow (#ffda00)
+             recreate the characteristic warm corona of a real Nixie tube.
+             This retro-analogue warmth contrasts gently with the digital
+             context, making the timer feel calm rather than urgent.
+
+             Implementation:
+             setInterval() runs every 250 ms to check elapsed time.
+             Comparing timestamps (Date.now()) rather than decrementing a
+             counter avoids drift when the browser tab is backgrounded.
+             Start/Pause share one button whose label toggles via JS.
+             Preset buttons (25 / 45 / 60 min) update both the internal
+             duration and the display before a session starts.
+
+             Source: Cirillo, F. (2006). The Pomodoro Technique.
+             https://francescocirillo.com/products/the-pomodoro-technique
+        ============================================================ -->
+        <div class="card timer-card">
+            <span class="card-label">FOCUS TIMER</span>
+
+            <!-- Study goal input -->
+            <div class="goal-section">
+                <label for="goal-input" class="goal-label">Today I want to focus on…</label>
+                <input
+                        type="text"
+                        id="goal-input"
+                        class="goal-input"
+                        placeholder="e.g. Chapter 3 review"
+                        maxlength="80"
+                        aria-label="Study goal"
+                />
+            </div>
+
+            <!-- Nixie-style countdown digits -->
+            <div class="nixie-display" id="nixie-display" aria-live="polite">
+                <span class="nixie-digit" id="timer-display">25:00</span>
+            </div>
+
+            <!-- Duration preset buttons -->
+            <div class="preset-row">
+                <button class="preset-btn active" onclick="setDuration(25)" data-mins="25">25 min</button>
+                <button class="preset-btn" onclick="setDuration(45)" data-mins="45">45 min</button>
+                <button class="preset-btn" onclick="setDuration(60)" data-mins="60">60 min</button>
+            </div>
+
+            <!-- Start / Reset controls -->
+            <div class="timer-controls">
+                <button class="timer-btn start-btn" id="start-btn" onclick="startTimer()">Start</button>
+                <button class="timer-btn reset-btn" onclick="resetTimer()">Reset</button>
+            </div>
+
+            <!-- Goal confirmation shown after Start is pressed -->
+            <p class="goal-confirm" id="goal-confirm"></p>
+
+        </div>
+
     </section>
 
 </main>
 
 <!-- Footer -->
 <footer>
-    <p>&copy; 2024 DJ MIX Player. All rights reserved.</p>
+    <p>&copy; 2024 Focus &amp; Flow. All rights reserved.</p>
     <div class="footer-credits">
-        <a href="https://icons8.com/icon/59862/play">Play</a> icon by <a href="https://icons8.com">Icons8</a> &nbsp;|&nbsp;
-        <a href="https://icons8.com/icon/61012/pause">Pause</a> icon by <a href="https://icons8.com">Icons8</a> &nbsp;|&nbsp;
-        <a href="https://icons8.com/icon/speaker">Speaker</a> icon by <a href="https://icons8.com">Icons8</a> &nbsp;|&nbsp;
+        <a href="https://icons8.com/icon/59862/play">Play</a> icon by <a href="https://icons8.com">Icons8</a> &nbsp;·&nbsp;
+        <a href="https://icons8.com/icon/61012/pause">Pause</a> icon by <a href="https://icons8.com">Icons8</a> &nbsp;·&nbsp;
+        <a href="https://icons8.com/icon/speaker">Speaker</a> icon by <a href="https://icons8.com">Icons8</a> &nbsp;·&nbsp;
         <a href="https://icons8.com/icon/full-screen">Fullscreen</a> icon by <a href="https://icons8.com">Icons8</a>
     </div>
 </footer>
