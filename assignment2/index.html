@@ -33,15 +33,14 @@
     <p class="header-sub">Music for relaxation &amp; deep study</p>
 </header>
 
-<!-- Navigation — unchanged from original structure -->
-<nav>
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Videos</a></li>
-        <li><a href="#">Music</a></li>
-        <li><a href="#">Playlists</a></li>
-    </ul>
-</nav>
+<!--
+    Navigation removed: the original template included Home / Videos /
+    Music / Playlists links, but all four are placeholder anchors (#)
+    with no real destination. Keeping them in a focus-and-study context
+    actively works against the design goal — extra clickable elements
+    pull the user's attention away from the player and the timer.
+    A single-purpose page stays cleaner and less distracting.
+-->
 
 <!-- Main Content -->
 <main class="container">
@@ -55,7 +54,10 @@
     <div class="media-player">
 
         <div class="video-wrapper">
-            <video id="custom-video-player">
+            <!-- loop added so the ambient track restarts automatically —
+                 a study session can run longer than the video duration,
+                 and an unexpected stop would break the user's flow. -->
+            <video id="custom-video-player" loop>
                 <source
                         src="https://thelongesthumstore.sgp1.cdn.digitaloceanspaces.com/IM-2250/miac.mp4"
                         type="video/mp4"
@@ -143,7 +145,9 @@
             <span class="card-label">NOW PLAYING</span>
             <h2>Quite Study Session</h2>
             <p class="description">
-                Carefully selected ambient music and soothing soundscapes designed to help you achieve a state of calm and focus. We recommend listening with headphones.
+                Carefully selected ambient music and soothing soundscapes
+                designed to help you achieve a state of calm and focus.
+                We recommend listening with headphones.
             </p>
             <div class="tags">
                 <span class="tag">#lofi</span>
@@ -198,7 +202,7 @@
                         type="text"
                         id="goal-input"
                         class="goal-input"
-                        placeholder="e.g. Chapter 3 review"
+                        placeholder="e.g. Chapter 4 revision"
                         maxlength="80"
                         aria-label="Study goal"
                 />

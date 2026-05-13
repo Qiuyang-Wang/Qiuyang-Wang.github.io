@@ -2,22 +2,23 @@
    FOCUS & FLOW — style.css
 
    Colour palette rationale:
-   The five specified colours split naturally into two roles.
-   The blues (#00017c, #0038a7, #0074d6) form a deep-to-medium
-   blue range that reads as calm, academic, and trustworthy —
-   appropriate for a study tool. The ambers (#ffb400, #ffda00)
-   are warm accent colours used sparingly for interactive elements
-   and the Nixie timer glow. Warm amber on cool blue is a classic
-   high-legibility combination and avoids the "tech startup" look
-   of cyan-on-dark that is overused in media players.
+   The background is a warm off-white (#faf2e0) that evokes the
+   feel of aged paper — familiar and non-fatiguing for long study
+   sessions. The blues (#0038a7, #0074d6) are used for card
+   surfaces and interactive elements, providing a calm, academic
+   contrast against the warm background. The ambers (#ffb400,
+   #ffda00) serve as accent and glow colours for interactive
+   elements and the Nixie timer. Warm amber on deep blue is a
+   high-legibility combination that avoids the cold "tech" look.
 
-   Text is kept in near-white (#f0f4ff) for body copy and pure
-   white for headings to ensure WCAG AA contrast against the
-   dark blue backgrounds.
+   Text inside dark blue cards stays near-white (#f0f4ff).
+   Page-level text (header subtitle, footer) uses --blue-mid
+   so it stays readable against the light background.
 ============================================================ */
 
 :root {
-    /* Blues — background and structural colours */
+    /* Page background — warm off-white, easier on the eyes
+       than pure white during a long study session */
     --off-white:    #faf2e0;
     --blue-mid:     #0038a7;
     --blue-light:   #0074d6;
@@ -28,10 +29,13 @@
 
     /* Text */
     --text-primary: #f0f4ff;
-    --text-muted:   #bbdfff;
+    --text-muted:   #8aa4d6;
 
     /* Surface */
-    --surface:      #0038a7;   /* slightly lighter than deep blue for cards */
+    /* Card surface raised from #020373 to #0038a7 (--blue-mid) so the
+       cards read as a distinct mid-blue layer rather than near-black,
+       which suits the lighter off-white page background better. */
+    --surface:      #0038a7;
     --surface-border: rgba(0, 116, 214, 0.35);
 
     /* Nixie glow layers — warm amber corona mimicking real Nixie tubes */
@@ -57,9 +61,10 @@ body {
     align-items: center;
     min-height: 100vh;
     /*
-        Subtle radial gradient from mid-blue at the top centre creates
-        a soft spotlight effect that draws the eye to the header and
-        player without being distracting during a long study session.
+        Radial gradient fades from mid-blue at the top centre down to
+        the warm off-white page background. The blue zone frames the
+        header and player, while the lower half of the page reads as
+        light and airy — less oppressive during a long session.
     */
     background-image: radial-gradient(ellipse 80% 40% at 50% 0%, var(--blue-mid) 0%, var(--off-white) 70%);
 }
@@ -83,42 +88,22 @@ header h1 {
 
 .header-sub {
     font-size: 0.82rem;
-    color: var(--text-muted);
+    /* Changed from --text-muted (#8aa4d6) to #bbdfff: the lighter
+       sky-blue reads more softly against the blue gradient at the
+       top of the page, giving the subtitle a delicate, airy tone
+       that complements the Playfair Display heading above it. */
+    color: #bbdfff;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     margin-top: 4px;
 }
 
-/* ---- Navigation ---- */
-nav {
-    margin: 18px 0;
-    text-align: center;
-    width: 100%;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 5px 14px;
-    border-radius: 2px;
-    border: 1px solid transparent;
-    transition: color 0.2s, border-color 0.2s;
-}
-
-nav ul li a:hover {
-    color: var(--amber-bright);
-    border-color: var(--amber);
-}
+/* ---- Navigation ----
+   Nav styles removed along with the HTML nav element.
+   The placeholder links added visual noise without serving any
+   function, which conflicts with the minimal, distraction-free
+   goal of a study music player.
+---- */
 
 /* ---- Container ---- */
 .container {
@@ -135,7 +120,10 @@ nav ul li a:hover {
     border-radius: 6px;
     padding: 14px;
     margin-bottom: 24px;
-    box-shadow: 0 8px 40px rgba(0, 1, 124, 0.6);
+    /* Shadow opacity reduced and shifted to --blue-mid tone: the
+       original deep-navy shadow at 0.6 looked heavy on a dark bg
+       but becomes too stark against the off-white page. */
+    box-shadow: 0 8px 40px rgba(0, 56, 167, 0.2);
 }
 
 .video-wrapper {
@@ -292,7 +280,9 @@ nav ul li a:hover {
     border: 1px solid var(--surface-border);
     border-radius: 6px;
     padding: 24px;
-    box-shadow: 0 4px 24px rgba(0,1,124,0.4);
+    /* Same reasoning as .media-player: lighter shadow suits the
+       off-white background without losing the sense of depth. */
+    box-shadow: 0 4px 24px rgba(0, 56, 167, 0.13);
 }
 
 .card-label {
@@ -464,7 +454,10 @@ nav ul li a:hover {
 
 .start-btn {
     background-color: var(--amber);
-    color: var(--off-white);
+    /* Hardcoded deep navy (#00017c) rather than --off-white because
+       --off-white is now the page background colour — using it here
+       would make the button label invisible on the amber surface. */
+    color: #00017c;
     border-color: var(--amber);
 }
 
@@ -496,7 +489,10 @@ nav ul li a:hover {
 footer {
     background-color: var(--off-white);
     border-top: 1px solid var(--surface-border);
-    color: var(--text-muted);
+    /* Footer background is now off-white, so near-white text would
+       be invisible. Using --blue-mid gives strong contrast on the
+       light background while staying in the page's blue palette. */
+    color: var(--blue-mid);
     text-align: center;
     padding: 16px;
     width: 100%;

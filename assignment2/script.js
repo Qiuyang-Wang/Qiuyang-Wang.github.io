@@ -166,10 +166,8 @@ function updateTimeDisplay() {
 /* Media player event listeners */
 video.addEventListener('timeupdate', updateProgress);
 video.addEventListener('loadedmetadata', updateTimeDisplay);
-video.addEventListener('ended', function () {
-    playPauseImg.src = 'https://img.icons8.com/ios-glyphs/30/play--v1.png';
-    playPauseImg.alt = 'Play';
-});
+/* 'ended' listener removed: the video now has the loop attribute,
+   so it restarts automatically and this event never fires. */
 
 
 /* ================================================================
@@ -229,7 +227,9 @@ function setDuration(mins) {
    startTimer()
    Toggles between Start and Pause states.
    On Start: records the goal text as a confirmation message,
-   captures the current timestamp, and begins the interval.
+   captures the current timestamp, begins the interval, and
+   also starts the video — so the music and timer are always
+   in sync without requiring a second user action.
    On Pause: clears the interval and adjusts remainingSeconds
    so resuming picks up exactly where it left off.
 ------------------------------------------------------------ */
@@ -238,6 +238,12 @@ function startTimer() {
         /* --- Start or Resume --- */
         timerRunning = true;
         startBtn.textContent = 'Pause';
+
+        /* Auto-play the video when the study session begins.
+           The play/pause icon is updated to match the new state. */
+        video.play();
+        playPauseImg.src = 'https://img.icons8.com/ios-glyphs/30/pause--v1.png';
+        playPauseImg.alt = 'Pause';
 
         /* Show the study goal as a confirmation — gives user feedback
            that their intention has been noted before the session begins */
