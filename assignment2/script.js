@@ -225,13 +225,13 @@ function setDuration(mins) {
 
 /* ------------------------------------------------------------
    startTimer()
-   Toggles between Start and Pause states.
-   On Start: records the goal text as a confirmation message,
-   captures the current timestamp, begins the interval, and
-   also starts the video — so the music and timer are always
-   in sync without requiring a second user action.
-   On Pause: clears the interval and adjusts remainingSeconds
-   so resuming picks up exactly where it left off.
+   Toggles between Start, Pause, and Resume states.
+   On Start/Resume: begins the countdown interval and plays the
+   video — music and timer stay in sync with a single click.
+   On Pause: clears the interval and also pauses the video so
+   audio does not continue playing while the session is on hold.
+   The play/pause button icon is updated in all three cases to
+   reflect the actual video state.
 ------------------------------------------------------------ */
 function startTimer() {
     if (!timerRunning) {
@@ -278,6 +278,13 @@ function startTimer() {
         startBtn.textContent = 'Resume';
         clearInterval(timerInterval);
         timerInterval = null;
+
+        /* Pause the video in sync with the timer so the music stops
+           immediately — leaving audio running during a pause break
+           would undermine the point of pausing the session. */
+        video.pause();
+        playPauseImg.src = 'https://img.icons8.com/ios-glyphs/30/play--v1.png';
+        playPauseImg.alt = 'Play';
     }
 }
 
