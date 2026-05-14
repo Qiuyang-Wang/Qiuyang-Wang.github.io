@@ -6,14 +6,7 @@
     <title>Focus & Flow — Study Music Player</title>
     <!--
         Reasons for font selection:
-        “Playfair Display” is a high-contrast serif typeface designed for headings—it
-        exudes a sense of calm, which complements
-        study and relaxation scenarios perfectly. “DM Sans” is the body text font; its spacious character spacing ensures
-        comfortable reading even at small sizes, which is crucial for pages that students may need
-        to keep open for extended periods.
-        “Nixie One” is specifically designed for the digital display of the timer, as
-        its hollow, tube-like glyphs closely resemble the
-        glow of a Nixie tube clock—thereby evoking a retro atmosphere.
+        “Playfair Display” is a high-contrast serif typeface designed for headings—it exudes a sense of calm, which complements study and relaxation scenarios perfectly. “DM Sans” is the body text font; its spacious character spacing ensures comfortable reading even at small sizes, which is crucial for pages that students may needto keep open for extended periods.“Nixie One” is specifically designed for the digital display of the timer, as its hollow, tube-like glyphs closely resemble the glow of a Nixie tube clock—thereby evoking a retro atmosphere.
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&family=Nixie+One&display=swap" rel="stylesheet">
@@ -23,47 +16,33 @@
 </head>
 <body>
 
-<!-- ============================================================
+<!--
      HEADER
-     Kept minimal — a study tool should not compete for attention.
-     The subtitle sets the mood immediately for a new visitor.
-============================================================ -->
+     Keep the design simple—learning tools should not be distracting.
+     The subtitle immediately makes the website’s purpose clear to users.
+-->
 <header>
     <h1>Focus &amp; Flow</h1>
     <p class="header-sub">Music for relaxation &amp; deep study</p>
 </header>
 
 <!--
-    Navigation removed: the original template included Home / Videos /
-    Music / Playlists links, but all four are placeholder anchors (#)
-    with no real destination. Keeping them in a focus-and-study context
-    actively works against the design goal — extra clickable elements
-    pull the user's attention away from the player and the timer.
-    A single-purpose page stays cleaner and less distracting.
+    Navigation removed: The original template included links to ‘Home / Videos /Music / Playlists’, but in scenarios where users need to focus on browsing,retaining these elements would actually run counter to the design objectives,as they would distract users from the player and timer.
+    A single-purpose page is cleaner and less distracting.
 -->
 
 <!-- Main Content -->
 <main class="container">
 
-    <!-- ============================================================
-         MEDIA PLAYER
-         The video's native controls are removed so the custom control
-         bar below is the only interface. This gives full visual control
-         over the look and feel, and avoids duplicated UI.
-    ============================================================ -->
+    <!-- MEDIA PLAYER -->
     <div class="media-player">
 
         <div class="video-wrapper">
-            <!-- loop keeps the ambient track running continuously —
-                 a study session can outlast the video duration, and
-                 an unexpected stop would break the user's focus.
-                 Video: "Ocean Sea Waves Vessel Ship" via Pixabay
-                 https://pixabay.com/videos/ocean-sea-waves-vessel-ship-129169/
-                 Audio: "Ocean Wave Loops" via Pixabay
-                 https://pixabay.com/music/upbeat-ocean-wave-loops-377890/
-                 Both released under the Pixabay License — free for
-                 commercial and non-commercial use, no attribution required,
-                 but credited here for academic transparency. -->
+            <!-- The looping feature keeps the video playing continuously, but study sessions may last longer than the video itself,and unexpected interruptions can break the user’s concentration.
+            Video: ‘Ocean Sea Waves Vessel Ship’ by Pixabay https://pixabay.com/videos/ocean-sea-waves-vessel-ship-129169/
+            Audio: ‘Ocean Wave Loops’ from Pixabay https://pixabay.com/music/upbeat-ocean-wave-loops-377890/
+            Both are published under the Pixabay licence — free to use for commercial and non-commercial purposes, with no attribution required.
+            -->
             <video id="custom-video-player" loop>
                 <source
                         src="video for study.mp4"
@@ -72,14 +51,13 @@
             </video>
         </div>
 
-        <!-- ============================================================
-             CUSTOM CONTROLS
+        <!--
+             Custom controls
              Layout: two rows.
-             Row 1 — play/pause · time display · volume · mute · fullscreen
-             Row 2 — clickable progress bar
-             The two-row layout keeps each row uncluttered, reducing
-             cognitive load for a user who just wants to press play and study.
-        ============================================================ -->
+             First row — Play/Pause/Time display/Volume/Mute/Full screen
+             Second row — Clickable progress bar
+             The two-row layout keeps each row of the interface clean and clear,thereby reducing the user’s cognitive load.
+        -->
         <div class="custom-controls">
 
             <div class="controls-row">
@@ -119,7 +97,7 @@
                     />
                 </button>
 
-                <!-- Fullscreen: uses Fullscreen API with webkit fallback -->
+                <!-- Fullscreen: uses Fullscreen API -->
                 <button id="fullscreen-btn" onclick="toggleFullscreen()" aria-label="Fullscreen">
                     <img
                             src="https://img.icons8.com/ios-glyphs/30/full-screen--v1.png"
@@ -139,12 +117,12 @@
     </div>
 
 
-    <!-- ============================================================
-         ADDITIONAL CONTENT
-         Two cards side by side on wide screens, stacked on mobile.
-         Left  — Now Playing info (replaces generic placeholder text)
-         Right — Pomodoro focus timer with study goal input (extra feature)
-    ============================================================ -->
+    <!--
+         Additional information
+         On widescreen devices, the two cards are displayed side by side; on mobile devices, they are stacked one above the other.
+         Left — Current playback information
+         Right — Focus timer, with support for entering learning goals (additional feature)
+    -->
     <section class="info-grid">
 
         <!-- Now Playing info card -->
@@ -165,40 +143,22 @@
             </div>
         </div>
 
-        <!-- ============================================================
-             POMODORO FOCUS TIMER — Extra Feature
+        <!--
+             Focus Timer — Additional Features
 
-             Why this feature:
-             The Pomodoro Technique is one of the most widely used study
-             methods (Cirillo, 2006). A built-in timer means the student
-             never has to leave the page to check the time, which reduces
-             distraction and directly serves the relaxation/study context.
+             Why this feature is needed:
+             The Pomodoro Technique is one of the most widely used study methods. The built-in timer means students do not need to leave the page to check the time, thereby reducing distractions.
 
-             The study goal input ("Today I want to focus on…") gives the
-             user a moment of intentional reflection before starting. When
-             Start is pressed, the goal text is echoed back as a confirmation
-             message — a simple form of user feedback that makes the
-             interaction feel purposeful rather than mechanical.
+             The study goal input feature (“Today I want to focus on…”) allows users a moment of reflection before starting. When “Start” is clicked, the goal text is displayed again as a confirmation message.
 
-             The Nixie tube aesthetic:
-             The timer digits use the "Nixie One" font, whose hollow tubular
-             strokes mimic the warm glow of a vintage Nixie tube clock.
-             CSS text-shadow layers in amber (#ffb400) and yellow (#ffda00)
-             recreate the characteristic warm corona of a real Nixie tube.
-             This retro-analogue warmth contrasts gently with the digital
-             context, making the timer feel calm rather than urgent.
+             Nixie Tube Aesthetics:
+             The timer’s digits use the “Nixie One” font; through its hollow, tube-like strokes and CSS text shadows in amber (#ffb400) and yellow (#ffda00), it recreates the distinctive play of light and shadow found in real Nixie tubes.This gives the timer a sense of calm rather than urgency.
+
 
              Implementation:
-             setInterval() runs every 250 ms to check elapsed time.
-             Comparing timestamps (Date.now()) rather than decrementing a
-             counter avoids drift when the browser tab is backgrounded.
-             Start/Pause share one button whose label toggles via JS.
-             Preset buttons (25 / 45 / 60 min) update both the internal
-             duration and the display before a session starts.
+             setInterval() runs every 250 milliseconds to check the elapsed time.By comparing timestamps (Date.now()) rather than a decrementing counter,we can avoid time discrepancies when the browser tab is minimised.The ‘Start’ and ‘Pause’ functions share a single button, with the label toggled via JavaScript.The preset buttons (25 / 45 / 60 minutes) update both the internal duration and the displayed text simultaneously before starting.
 
-             Source: Cirillo, F. (2006). The Pomodoro Technique.
-             https://francescocirillo.com/products/the-pomodoro-technique
-        ============================================================ -->
+         -->
         <div class="card timer-card">
             <span class="card-label">FOCUS TIMER</span>
 
@@ -233,7 +193,7 @@
                 <button class="timer-btn reset-btn" onclick="resetTimer()">Reset</button>
             </div>
 
-            <!-- Goal confirmation shown after Start is pressed -->
+
             <p class="goal-confirm" id="goal-confirm"></p>
 
         </div>

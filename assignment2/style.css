@@ -1,24 +1,12 @@
-/* ============================================================
-   FOCUS & FLOW — style.css
+/*
+    Colour Scheme Description:
+   The background uses a warm off-white (#faf2e0) to evoke the texture of aged paper—a shade that feels familiar without causing eye strain during prolonged study sessions. Blue tones (#0038a7, #0074d6) are used for card faces and interactive elements, creating a calm and scholarly contrast against the warm background. Amber (#ffb400,#ffda00) serves as an accent and highlight colour for interactive elements and the Nix timer. Warm amber against a deep blue background offers high readability.
 
-   Colour palette rationale:
-   The background is a warm off-white (#faf2e0) that evokes the
-   feel of aged paper — familiar and non-fatiguing for long study
-   sessions. The blues (#0038a7, #0074d6) are used for card
-   surfaces and interactive elements, providing a calm, academic
-   contrast against the warm background. The ambers (#ffb400,
-   #ffda00) serve as accent and glow colours for interactive
-   elements and the Nixie timer. Warm amber on deep blue is a
-   high-legibility combination that avoids the cold "tech" look.
-
-   Text inside dark blue cards stays near-white (#f0f4ff).
-   Page-level text (header subtitle, footer) uses --blue-mid
-   so it stays readable against the light background.
-============================================================ */
+    Text within cards remains close to white (#f0f4ff).Page-level text (header subtitles, footers) uses the --blue-mid colour to maintain high contrast against a light background.
+ */
 
 :root {
-    /* Page background — warm off-white, easier on the eyes
-       than pure white during a long study session */
+    /* Page background — warm off-white, easier on the eyes than pure white during a long study session */
     --off-white:    #faf2e0;
     --blue-mid:     #0038a7;
     --blue-light:   #0074d6;
@@ -38,7 +26,7 @@
     --surface:      #0038a7;
     --surface-border: rgba(0, 116, 214, 0.35);
 
-    /* Nixie glow layers — warm amber corona mimicking real Nixie tubes */
+    /* Nixie Glow Layer – a warm amber glow that recreates the authentic Nixie tube effect */
     --nixie-glow:
             0 0 6px #ffda00,
             0 0 16px #ffb400,
