@@ -109,7 +109,7 @@ function toggleMute() {
  */
 function toggleFullscreen() {
     if (video.requestFullscreen) {
-        video.requestFullscreen();
+        video.requestFullscreen().catch(err => console.log(err));
     } else if (video.webkitRequestFullscreen) {
         video.webkitRequestFullscreen();
     }
