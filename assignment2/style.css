@@ -20,9 +20,7 @@
     --text-muted:   #8aa4d6;
 
     /* Surface */
-    /* Card surface raised from #020373 to #0038a7 (--blue-mid) so the
-       cards read as a distinct mid-blue layer rather than near-black,
-       which suits the lighter off-white page background better. */
+    /* Change the card’s background colour from #020373 to #0038a7 (--blue-mid) so that the card appears as a distinct medium blue rather than almost black, which is more suitable for a lighter, off-white page background.*/
     --surface:      #0038a7;
     --surface-border: rgba(0, 116, 214, 0.35);
 
@@ -49,15 +47,12 @@ body {
     align-items: center;
     min-height: 100vh;
     /*
-        Radial gradient fades from mid-blue at the top centre down to
-        the warm off-white page background. The blue zone frames the
-        header and player, while the lower half of the page reads as
-        light and airy — less oppressive during a long session.
+        Starting from the medium blue at the top centre of the page, the colour fades out in a radial gradient, gradually transitioning to a warm, off-white page background. The blue area frames the header and the player, whilst the white space in the lower half of the page prevents the layout from feeling oppressive during prolonged browsing.
     */
     background-image: radial-gradient(ellipse 80% 40% at 50% 0%, var(--blue-mid) 0%, var(--off-white) 70%);
 }
 
-/* ---- Header ---- */
+/*  Header  */
 header {
     background-color: transparent;
     padding: 28px 0 18px;
@@ -76,22 +71,14 @@ header h1 {
 
 .header-sub {
     font-size: 0.82rem;
-    /* Changed from --text-muted (#8aa4d6) to #bbdfff: the lighter
-       sky-blue reads more softly against the blue gradient at the
-       top of the page, giving the subtitle a delicate, airy tone
-       that complements the Playfair Display heading above it. */
+    /* Change the colour from --text-muted (#8aa4d6) to #bbdfff: this lighter shade of sky blue contrasts with the blue gradient at the top of the page to create a softer, more translucent visual effect. */
     color: #bbdfff;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     margin-top: 4px;
 }
 
-/* ---- Navigation ----
-   Nav styles removed along with the HTML nav element.
-   The placeholder links added visual noise without serving any
-   function, which conflicts with the minimal, distraction-free
-   goal of a study music player.
----- */
+
 
 /* ---- Container ---- */
 .container {
@@ -108,9 +95,7 @@ header h1 {
     border-radius: 6px;
     padding: 14px;
     margin-bottom: 24px;
-    /* Shadow opacity reduced and shifted to --blue-mid tone: the
-       original deep-navy shadow at 0.6 looked heavy on a dark bg
-       but becomes too stark against the off-white page. */
+    /* The opacity of the shadow has been reduced and adjusted to the --blue-mid shade:The dark navy blue shadow, which originally had an opacity of 0.6, appeared too heavy against the background. */
     box-shadow: 0 8px 40px rgba(0, 56, 167, 0.2);
 }
 
@@ -253,9 +238,9 @@ header h1 {
     transition: width 0.25s linear;
 }
 
-/* ============================================================
+/*
    INFO GRID — two-column card layout below the player
-============================================================ */
+*/
 .info-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -269,7 +254,7 @@ header h1 {
     border-radius: 6px;
     padding: 24px;
     /* Same reasoning as .media-player: lighter shadow suits the
-       off-white background without losing the sense of depth. */
+       off-white background. */
     box-shadow: 0 4px 24px rgba(0, 56, 167, 0.13);
 }
 
@@ -313,9 +298,9 @@ header h1 {
     letter-spacing: 0.05em;
 }
 
-/* ============================================================
+/*
    POMODORO TIMER CARD
-============================================================ */
+*/
 .timer-card {
     display: flex;
     flex-direction: column;
@@ -356,18 +341,16 @@ header h1 {
     border-color: var(--amber);
 }
 
-/* ============================================================
-   NIXIE TUBE DISPLAY
+/*
+   Nixie Tube Display Effect
 
-   The Nixie tube effect is built from three layers:
-   1. "Nixie One" font — tubular strokes mimic the glass tubes
-   2. amber/yellow text colour (#ffda00) — warm cathode glow
-   3. Stacked text-shadow values — inner bright core fading to
-      a soft amber corona, matching real Nixie tube photographs
+   The Nixie tube effect consists of three layers:
+   1. The “Nixie One” font—tubular strokes that mimic glass tubes
+   2. Amber text colour (#ffda00)—a warm glow
+   3. Overlaid text shadow — a bright inner core gradually fading into a soft amber halo
 
-   The .nixie-display container adds a dark rounded box that acts
-   as the glass envelope of the tube, with a faint amber border.
-============================================================ */
+   The `.nixie-display` container adds a dark, rounded border to represent the glass casing of the tube, with a faint amber outline.
+ */
 .nixie-display {
     background-color: rgba(0, 0, 0, 0.55);
     border: 1px solid rgba(255, 180, 0, 0.25);
@@ -386,8 +369,7 @@ header h1 {
     animation: flicker 6s infinite;
 }
 
-/* Very subtle brightness flicker — barely perceptible, just enough
-   to feel organic rather than purely digital */
+/* A subtle flicker in brightness, closely resembling the flickering of a light bulb in real life. */
 @keyframes flicker {
     0%, 95%, 100% { opacity: 1; }
     96%            { opacity: 0.92; }
@@ -443,7 +425,7 @@ header h1 {
 .start-btn {
     background-color: var(--amber);
     /* Hardcoded deep navy (#00017c) rather than --off-white because
-       --off-white is now the page background colour — using it here
+       --off-white is now the page background colour and using it here
        would make the button label invisible on the amber surface. */
     color: #00017c;
     border-color: var(--amber);
@@ -477,9 +459,7 @@ header h1 {
 footer {
     background-color: var(--off-white);
     border-top: 1px solid var(--surface-border);
-    /* Footer background is now off-white, so near-white text would
-       be invisible. Using --blue-mid gives strong contrast on the
-       light background while staying in the page's blue palette. */
+    /* Using --blue-mid for the footer creates a strong contrast against a light background,whilst maintaining the page’s blue colour scheme. */
     color: var(--blue-mid);
     text-align: center;
     padding: 16px;
