@@ -1,0 +1,412 @@
+/*
+  When it came to the colour scheme, I drew inspiration from both commercial product showcase pages and technical breakdown diagrams, ultimately retaining only three colours: red, black and white. The white background gives the line-art headphones a clean look and lends them a touch of a product poster’s aesthetic. The black background appears only in the Noise Control section, as noise cancellation relates to the sound space, the black helps this section feel as though the viewer has stepped inside the headphones, creating a distinct contrast with the other sections. Red is concentrated on the brand label, stage numbers, progress bar and driver components, with a single aim: to allow users to identify the current focus at a glance.
+
+  The choice of typefaces was also carefully considered. A relatively bold system font is used for the main headings to create the impact typical of a product launch page. Smaller labels and technical text use a monospaced font, giving them a look closer to annotations on engineering drawings. The body text has been switched to Tahoma and rendered in grey, ensuring it does not compete for visual attention with the large headings or red lines; the user’s gaze naturally falls upon the changes to the headphones. The retention of ample white space throughout serves the same purpose. From the user’s perspective, this layered presentation is clearer than cramming in a large amount of text at once; with each scroll, the user needs only to process a single change.
+
+*/
+:root {
+
+  --red: #e60000;
+  --black: #050505;
+  --white: #fcfbfe;
+  --soft: #d8d3ca;
+  --progress: 0;
+  --zoom: 0;
+  --explode: 0;
+  --driver: 0;
+  --noise: 0;
+  --return: 0;
+  --dark: 0;
+  --crop: 0;
+  --parts: 0;
+}
+
+
+html {
+  background: var(--white);
+  color: var(--black);
+}
+
+body {
+  font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  background: var(--white);
+}
+
+.scroll-space {
+  height: 720vh;
+  background:
+    linear-gradient(
+      180deg,
+      var(--white) 0%,
+      var(--white) 58%,
+      #080808 70%,
+      #080808 84%,
+      var(--white) 100%
+    );
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  background:
+
+    linear-gradient(
+      180deg,
+      rgba(8, 8, 8, calc(var(--dark) * .96)),
+      rgba(8, 8, 8, calc(var(--dark) * .96))
+    ),
+    radial-gradient(circle at 70% 45%, rgba(230, 0, 0, calc(var(--dark) * .14)), transparent 38%),
+    var(--white);
+  color: rgb(
+    calc(5 + var(--dark) * 240)
+    calc(5 + var(--dark) * 240)
+    calc(5 + var(--dark) * 240)
+  );
+}
+
+.brand {
+  position: absolute;
+  top: 30px;
+  left: clamp(22px, 3vw, 48px);
+  z-index: 10;
+  background: var(--red);
+
+  color: white;
+  padding: 12px 18px 10px;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: clamp(14px, 1.4vw, 22px);
+}
+
+.copy-panel {
+  position: absolute;
+  z-index: 8;
+  left: clamp(28px, 5vw, 72px);
+  top: 18vh;
+  width: min(42vw, 540px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.copy-panel.is-changing {
+  opacity: .25;
+  transform: translateY(18px);
+}
+
+.step {
+  color: var(--red);
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: clamp(14px, 1.5vw, 22px);
+  margin-bottom: 22px;
+}
+
+.step::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 2px;
+  margin-top: 20px;
+  background: var(--red);
+  transform-origin: left;
+  transform: scaleX(calc(.25 + var(--progress) * .75));
+}
+
+h1 {
+  font-size: clamp(68px, 12vw, 172px);
+  line-height: .86;
+  font-weight: 900;
+  letter-spacing: 0;
+  max-width: 780px;
+}
+
+.body-text {
+  margin-top: 30px;
+  width: min(370px, 80vw);
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: clamp(14px, 1.2vw, 18px);
+  letter-spacing: 0;
+  line-height: 1.45;
+  color: #7d8086;
+}
+
+.progress-panel {
+  position: absolute;
+  right: clamp(28px, 5vw, 72px);
+  top: 44px;
+  z-index: 9;
+  width: 250px;
+
+  font-family: "Courier New", monospace;
+  color: var(--red);
+  font-weight: 700;
+  text-align: right;
+}
+
+.progress-track {
+  height: 2px;
+  background: rgba(230, 0, 0, .22);
+  margin-top: 12px;
+  position: relative;
+}
+
+#progressDot {
+  position: absolute;
+  top: -5px;
+  left: calc(var(--progress) * 100%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--red);
+  transform: translateX(-50%);
+}
+
+.product-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: currentColor;
+}
+
+.line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.thick {
+  stroke-width: 3;
+}
+
+.light {
+  opacity: .42;
+}
+
+.fill-white {
+  fill: rgb(
+    calc(247 - var(--dark) * 230)
+    calc(245 - var(--dark) * 230)
+    calc(241 - var(--dark) * 230)
+  );
+}
+
+.fill-none {
+  fill: none;
+}
+
+.dotted-arc {
+  stroke-dasharray: 2 9;
+  opacity: .35;
+}
+
+.dots-fill {
+  fill: url(#dots);
+  opacity: .18;
+}
+
+.cup-letter {
+  font-family: "Courier New", monospace;
+  font-size: 42px;
+  fill: currentColor;
+  opacity: .55;
+}
+
+.whole-headset {
+  transform-box: fill-box;
+  transform-origin: 70% 54%;
+  transform:
+    translate(
+      calc(-130px * var(--zoom) * (1 - var(--return)) + 80px * var(--return)),
+      calc(-28px * var(--zoom) * (1 - var(--return)) - 12px * var(--noise) + 12px * var(--return))
+    )
+    scale(calc(1 + var(--zoom) * 1.15 * (1 - var(--return)) - var(--noise) * .08 + var(--return) * .04));
+  opacity: calc(1 - var(--parts) * .6 - var(--driver) * .35 + var(--noise) * .55 + var(--return));
+}
+
+.left-cup {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translateX(calc(-54px * var(--noise)));
+}
+
+.right-cup {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translateX(calc(54px * var(--noise)));
+}
+
+.crop-guides {
+  opacity: var(--crop);
+  color: var(--red);
+  fill: none;
+  stroke: var(--red);
+
+  stroke-width: 2;
+  stroke-dasharray: 8 8;
+  vector-effect: non-scaling-stroke;
+}
+
+.explode-set {
+  opacity: var(--parts);
+  transform-box: fill-box;
+  transform-origin: center;
+  transform:
+    translate(calc(140px * var(--return)), calc(-22px * var(--driver)))
+    scale(calc(.86 + var(--driver) * .18));
+}
+
+.part {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.shell {
+  transform: translateX(calc(115px * var(--explode) - 180px * var(--return)));
+}
+
+.cushion {
+  transform: translateX(calc(38px * var(--explode) - 126px * var(--return)));
+}
+
+
+.plate {
+  transform: translateX(calc(-42px * var(--explode) - 76px * var(--return)));
+}
+
+.driver-core {
+  transform:
+    translateX(calc(-120px * var(--explode) - 28px * var(--return)))
+    rotate(calc(18deg * var(--driver)));
+}
+
+.back-ring {
+  transform: translateX(calc(-190px * var(--explode) + 20px * var(--return)));
+}
+
+.red-line {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.light-red {
+  opacity: .26;
+  stroke-dasharray: 10 9;
+}
+
+.driver-fins,
+.driver-rays {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2;
+  opacity: .8;
+}
+
+.driver-focus {
+  opacity: calc(var(--driver) * (1 - var(--noise)));
+  transform-box: fill-box;
+  transform-origin: center;
+
+  transform:
+    translateX(calc(-35px + var(--driver) * 20px))
+    rotate(calc(var(--driver) * 28deg))
+    scale(calc(.5 + var(--driver) * .55));
+}
+
+.waves {
+  opacity: var(--noise);
+}
+
+.wave {
+  fill: none;
+  stroke-width: 2.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.black-wave {
+  stroke: currentColor;
+  opacity: .55;
+}
+
+.red-wave {
+  stroke: var(--red);
+  opacity: .9;
+}
+
+.quiet-wave {
+  stroke: currentColor;
+  opacity: .35;
+}
+
+.labels {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 18px;
+  fill: currentColor;
+  stroke: var(--red);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  opacity: calc(var(--parts) * (1 - var(--noise)));
+}
+
+.labels text {
+  stroke: none;
+  fill: currentColor;
+}
+
+.labels circle {
+  fill: var(--red);
+  stroke: var(--red);
+}
+
+.label {
+  opacity: var(--explode);
+}
+
+.label-cushion {
+  transition-delay: .1s;
+}
+
+.label-driver {
+  transition-delay: .2s;
+}
+
+@media (max-width: 800px) {
+  .stage {
+    min-height: 720px;
+  }
+
+  .copy-panel {
+    top: 110px;
+    width: 82vw;
+  }
+
+  h1 {
+    font-size: clamp(58px, 18vw, 120px);
+  }
+
+  .body-text {
+    font-size: 14px;
+    width: 78vw;
+  }
+
+  .product-svg {
+    width: 145%;
+    left: -36%;
+    top: 10%;
+  }
+
+  .progress-panel {
+    width: 190px;
+    top: 86px;
+    right: 22px;
+  }
+}
