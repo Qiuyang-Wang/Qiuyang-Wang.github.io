@@ -4,8 +4,10 @@
   The choice of typefaces was also carefully considered. A relatively bold system font is used for the main headings to create the impact typical of a product launch page. Smaller labels and technical text use a monospaced font, giving them a look closer to annotations on engineering drawings. The body text has been switched to Tahoma and rendered in grey, ensuring it does not compete for visual attention with the large headings or red lines; the user’s gaze naturally falls upon the changes to the headphones. The retention of ample white space throughout serves the same purpose. From the user’s perspective, this layered presentation is clearer than cramming in a large amount of text at once; with each scroll, the user needs only to process a single change.
 
 */
+/* I use ChatGPT to fix bugs, suggest specific values for animation changes, and correct syntax errors in the comments */
 :root {
 
+  /* Here, both the colours and the scroll stages are defined as CSS variables; JavaScript simply needs to adjust the values, whilst the actual animation is handled by CSS. */
   --red: #e60000;
   --black: #050505;
   --white: #fcfbfe;
@@ -22,17 +24,20 @@
 }
 
 
+/* The default colour scheme is set to a white background with black text; the ‘dark’ variable is then used to switch to a black background during the noise phase. */
 html {
   background: var(--white);
   color: var(--black);
 }
+
+/* As the page does not require horizontal scrolling, the horizontal overflow is hidden to prevent unnecessary scrollbars from appearing when the SVG is zoomed in. */
 
 body {
   font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   overflow-x: hidden;
   background: var(--white);
 }
-
+/* 720vh: Allow sufficient length for the scroll animation; the background gradient should also transition in stages from white to black and back again. */
 .scroll-space {
   height: 720vh;
   background:
@@ -45,7 +50,7 @@ body {
       var(--white) 100%
     );
 }
-
+/* sticky keeps the stage fixed on the screen, so that as the user scrolls, they see the same set of elements being gradually broken down. */
 .stage {
   position: sticky;
   top: 0;
@@ -68,6 +73,7 @@ body {
   );
 }
 
+/* The brand uses a red background and a monospaced font, which not only resembles a product logo but also maintains consistency with the engineering notation style that follows. */
 .brand {
   position: absolute;
   top: 30px;
@@ -83,6 +89,8 @@ body {
   font-size: clamp(14px, 1.4vw, 22px);
 }
 
+/* The text panel is fixed on the left and does not draw more attention than the product image. */
+
 .copy-panel {
   position: absolute;
   z-index: 8;
@@ -92,11 +100,13 @@ body {
   transition: opacity .25s ease, transform .25s ease;
 }
 
+/* When switching text, have it fade out slightly and move downwards first; this looks more natural than simply replacing it. */
 .copy-panel.is-changing {
   opacity: .25;
   transform: translateY(18px);
 }
 
+/* The use of red text and a monospaced font is intended to make the step numbers look more like technical labels. */
 .step {
   color: var(--red);
   font-family: "Courier New", monospace;
@@ -106,6 +116,7 @@ body {
   margin-bottom: 22px;
 }
 
+/* Use pseudo-elements to create a short progress bar; simply read the `--progress` property without adding any extra HTML tags. */
 .step::after {
   content: "";
   display: block;
@@ -117,6 +128,7 @@ body {
   transform: scaleX(calc(.25 + var(--progress) * .75));
 }
 
+/* The title font has been made quite large to give it the impact of a real product launch page; the clamp prevents text from spilling over on smaller screens. */
 h1 {
   font-size: clamp(68px, 12vw, 172px);
   line-height: .86;
@@ -124,7 +136,7 @@ h1 {
   letter-spacing: 0;
   max-width: 780px;
 }
-
+/* Keep the text colour subdued so that the explanatory text aids comprehension without competing for attention with the SVG animations. */
 .body-text {
   margin-top: 30px;
   width: min(370px, 80vw);
@@ -135,6 +147,7 @@ h1 {
   color: #7d8086;
 }
 
+/* The progress indicator in the top-right corner balances the text on the left, ensuring that there is always a clear point of reference when scrolling. */
 .progress-panel {
   position: absolute;
   right: clamp(28px, 5vw, 72px);
@@ -155,6 +168,7 @@ h1 {
   position: relative;
 }
 
+/* The position of the small dot is determined by --progress; essentially, this maps the scroll percentage to a horizontal coordinate. */
 #progressDot {
   position: absolute;
   top: -5px;
@@ -166,6 +180,7 @@ h1 {
   transform: translateX(-50%);
 }
 
+/* The SVG covers the entire stage, with all product line art in the same coordinate system, ensuring more stable transformations later on. */
 .product-svg {
   position: absolute;
   inset: 0;
@@ -174,6 +189,7 @@ h1 {
   color: currentColor;
 }
 
+/* The `vector-effect` property ensures that lines retain their thickness when the SVG is scaled; otherwise, the line art would appear clunky when enlarged. */
 .line {
   fill: none;
   stroke: currentColor;
@@ -189,6 +205,7 @@ h1 {
   opacity: .42;
 }
 
+/* The fill colour will darken in line with the --dark option, so that parts do not stand out starkly as pure white against a black noise background. */
 .fill-white {
   fill: rgb(
     calc(247 - var(--dark) * 230)
@@ -217,7 +234,7 @@ h1 {
   fill: currentColor;
   opacity: .55;
 }
-
+/* The complete set of headphones will move and scale across three phases—zoom, noise and return—serving as the visual backbone of the opening and the resolution. */
 .whole-headset {
   transform-box: fill-box;
   transform-origin: 70% 54%;
@@ -229,7 +246,7 @@ h1 {
     scale(calc(1 + var(--zoom) * 1.15 * (1 - var(--return)) - var(--noise) * .08 + var(--return) * .04));
   opacity: calc(1 - var(--parts) * .6 - var(--driver) * .35 + var(--noise) * .55 + var(--return));
 }
-
+/* During the noise phase, the ear cups are slightly separated, creating a sense of spatial openness. */
 .left-cup {
   transform-box: fill-box;
   transform-origin: center;
@@ -242,6 +259,7 @@ h1 {
   transform: translateX(calc(54px * var(--noise)));
 }
 
+/* The crop lines only appear when zoomed in; the red dotted lines are used to simulate framing guides found in design or engineering drawings. */
 .crop-guides {
   opacity: var(--crop);
   color: var(--red);
@@ -253,6 +271,7 @@ h1 {
   vector-effect: non-scaling-stroke;
 }
 
+/* Start by applying overall transparency and displacement to create the disassembly view, then move each part in more detailed layers. */
 .explode-set {
   opacity: var(--parts);
   transform-box: fill-box;
@@ -266,7 +285,7 @@ h1 {
   transform-box: fill-box;
   transform-origin: center;
 }
-
+/* As the `translateX` value differs for each component, this creates a sequence of unfolding from the outer shell to the core. */
 .shell {
   transform: translateX(calc(115px * var(--explode) - 180px * var(--return)));
 }
@@ -289,7 +308,7 @@ h1 {
 .back-ring {
   transform: translateX(calc(-190px * var(--explode) + 20px * var(--return)));
 }
-
+/* The red lines are specifically used for the core structure and sound waves, allowing users to see at a glance which aspects of the sound technology are currently being highlighted. */
 .red-line {
   fill: none;
   stroke: var(--red);
@@ -315,6 +334,7 @@ h1 {
   transform-box: fill-box;
   transform-origin: center;
 
+  /* driver-focus rotates and zooms in, with the aim of elevating the driver unit from the component level to the current visual centre. */
   transform:
     translateX(calc(-35px + var(--driver) * 20px))
     rotate(calc(var(--driver) * 28deg))
@@ -324,7 +344,7 @@ h1 {
 .waves {
   opacity: var(--noise);
 }
-
+/* 'Wave' appears only in the 'Noise' phase, to avoid the information becoming too cluttered in the earlier product teardown phase. */
 .wave {
   fill: none;
   stroke-width: 2.2;
@@ -346,6 +366,7 @@ h1 {
   opacity: .35;
 }
 
+/* Labels appear when the ‘parts’ and ‘noise’ variables are displayed; the names appear during the breakdown and fade out once the vocal section begins. */
 .labels {
   font-family: "Courier New", monospace;
   font-weight: 700;
@@ -379,6 +400,7 @@ h1 {
   transition-delay: .2s;
 }
 
+/* On smaller screens, the SVG is enlarged and shifted to the left so that the headphones remain at the centre of the frame and are not pushed out of the way by the text. */
 @media (max-width: 800px) {
   .stage {
     min-height: 720px;
